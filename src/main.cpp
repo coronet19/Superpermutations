@@ -1,7 +1,9 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <filesystem>
 #include "../include/permutations.h"
+#include "../include/logger.h"
 
 
 int main(int argc, char** argv) {
@@ -16,11 +18,20 @@ int main(int argc, char** argv) {
         return 1;
     }
 
+    std::string folderName = "logs";
+    if (!std::filesystem::exists(folderName)) {
+        std::filesystem::create_directory(folderName);
+    }
+
+    Logger logger("logs/results.csv");
+
     for(int i = 1; i <= n; ++i){
         std::vector<std::vector<uint8_t>> perms = Permutations::getPermutations(i);
         std::vector<uint8_t> super = Permutations::getSuperpermutation(perms);
 
         assert(Permutations::isSuperpermutation(perms, super)); // verification is always good
+
+        logger.log(i, super);
 
         std::string out = "";
         out.reserve(super.size() * 4); // probably not optimal. string uses 4 bytes per character, uint8_t is 1 byte. so maybe it is? idk

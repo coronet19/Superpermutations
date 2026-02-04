@@ -1,9 +1,8 @@
-#ifndef PERMUTATIONS_H
-#define PERMUTATIONS_H
+#pragma once
 
 #include <vector>
 #include <cstdint> // defines uint8_t
-#include <assert.h>
+#include <cassert>
 #include <algorithm>
 #include <ranges>
 
@@ -19,5 +18,3 @@ public:
     static std::vector<uint8_t> getSuperpermutation(std::vector<std::vector<uint8_t>> perms);
     static bool isSuperpermutation(const std::vector<std::vector<uint8_t>>& perms, const std::vector<uint8_t>& superpermutation);
 };
-
-#endif

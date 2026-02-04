@@ -1,5 +1,4 @@
 #include "../include/permutations.h"
-#include <algorithm>
 
 
 void Permutations::backtrack(int start, int n, std::vector<uint8_t>& current, std::vector<std::vector<uint8_t>>& res){

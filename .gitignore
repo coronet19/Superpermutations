@@ -41,8 +41,12 @@ bin/
 # debug information files
 *.dwo
 
-# --- IDE and OS Specific ---
+# IDE and OS Specific
 *.DS_Store
 *.vscode/
 *.idea/
 *.zed/
+*.clangd
+
+# logs
+log/

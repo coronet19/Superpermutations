@@ -11,5 +11,6 @@ $(TARGET): $(SOURCES)
 
 clean:
 	@if exist "bin" rmdir /s /q "bin"
+	@if exist "logs" rmdir /s /q "logs"
 
 .PHONY: all clean
