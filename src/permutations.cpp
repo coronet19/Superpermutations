@@ -1,6 +1,13 @@
 #include "../include/permutations.h"
 
 
+size_t Permutations::getRandomIndex(const size_t s){
+    static std::random_device rd;
+    static std::mt19937 gen(rd()); // initialized only once
+    std::uniform_int_distribution<size_t> dist(0, s - 1);
+    return dist(gen);
+}
+
 void Permutations::backtrack(int start, int n, std::vector<uint8_t>& current, std::vector<std::vector<uint8_t>>& res){
     if(start == n){
         res.push_back(current);
@@ -61,32 +68,51 @@ std::vector<std::vector<uint8_t>> Permutations::getPermutations(int n) {
     return res;
 }
 
-std::vector<uint8_t> Permutations::getSuperpermutation(std::vector<std::vector<uint8_t>> perms) {
+// uses a greedy approach to make a minimum sized superpermutation
+std::vector<uint8_t> Permutations::getSuperpermutation(std::vector<std::vector<uint8_t>> perms){
     if (perms.empty()) return {};
 
-    std::vector<uint8_t> result = perms[0];
+    // size_t r = getRandomIndex(perms.size());
+    size_t r = 0;
+
+    std::vector<uint8_t> result = perms[r];
     std::vector<bool> used(perms.size(), false);
-    used[0] = true;
+    used[r] = true;
 
-    for (size_t count = 1; count < perms.size(); ++count) {
-        int bestOverlap = -1;
-        int bestIdx = -1;
+    for(size_t count = 1; count < perms.size(); ++count){
+        // (overlap amount, index)
+        std::vector<std::vector<int>> bestOverlaps = { { -1, -1 } };
 
-        for (size_t j = 0; j < perms.size(); ++j) {
-            if (used[j]) continue;
+        for(size_t j = 0; j < perms.size(); ++j){
+            if(used[j]) continue;
 
             // Use the overlap logic we built earlier
             int overlap = getOverlap(result, perms[j]);
-            if (overlap > bestOverlap) {
-                bestOverlap = overlap;
-                bestIdx = j;
+            if(overlap > bestOverlaps[0][0]){
+                bestOverlaps.clear();
+                bestOverlaps = { { overlap, static_cast<int>(j) } };
+            } else if(overlap == bestOverlaps[0][0]){
+                bestOverlaps.push_back(std::vector<int>{ overlap, static_cast<int>(j) });
             }
         }
+
+        // size_t rnd = getRandomIndex(bestOverlaps.size());
+        size_t rnd = 0;
+        int bestOverlap = bestOverlaps[rnd][0];
+        int bestIdx = bestOverlaps[rnd][1];
+
+        int sum = 0;
+        for(const auto& v : bestOverlaps){
+            sum += v[0];
+        }
+
+        assert((int)(bestOverlaps[0][0]) == (int)((int)sum / (int)bestOverlaps.size()));
 
         // Append the unique part of the best match
         result.insert(result.end(), perms[bestIdx].begin() + bestOverlap, perms[bestIdx].end());
         used[bestIdx] = true;
     }
+
     return result;
 }
 
@@ -101,4 +127,11 @@ bool Permutations::isSuperpermutation(const std::vector<std::vector<uint8_t>>& p
     }
 
     return true;
+}
+
+
+std::vector<std::vector<uint8_t>> Permutations::createOverlapMatrix(const std::vector<std::vector<uint8_t>>& perms){
+    std::vector<std::vector<uint8_t>> res(perms.size(), std::vector<uint8_t>(perms.size()));
+
+    return res;
 }
