@@ -1,5 +1,5 @@
 CXX      := g++
-CXXFLAGS := -std=c++20 -Wall -Iinclude -O3
+CXXFLAGS := -std=c++20 -Wall -Iinclude# -O3
 TARGET   := bin/superpermutation
 SOURCES  := $(wildcard src/*.cpp)
 

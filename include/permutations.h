@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <ranges>
 #include <random>
+#include <map>
+#include <set>
 
 
 class Permutations{
@@ -18,6 +20,7 @@ private:
 public:
     static std::vector<std::vector<uint8_t>> getPermutations(int n);
     static std::vector<uint8_t> getSuperpermutation(std::vector<std::vector<uint8_t>> perms);
+    static std::vector<uint8_t> getSuperpermutationFast(std::vector<std::vector<uint8_t>> perms);
     static bool isSuperpermutation(const std::vector<std::vector<uint8_t>>& perms, const std::vector<uint8_t>& superpermutation);
     static std::vector<std::vector<uint8_t>> createOverlapMatrix(const std::vector<std::vector<uint8_t>>& perms);
 };

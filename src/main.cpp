@@ -27,7 +27,8 @@ int main(int argc, char** argv) {
 
     for(int i = 1; i <= n; ++i){
         std::vector<std::vector<uint8_t>> perms = Permutations::getPermutations(i);
-        std::vector<uint8_t> super = Permutations::getSuperpermutation(perms);
+        // std::vector<uint8_t> super = Permutations::getSuperpermutation(perms);
+        std::vector<uint8_t> super = Permutations::getSuperpermutationFast(perms);
 
         assert(Permutations::isSuperpermutation(perms, super)); // verification is always good
 
